@@ -30,6 +30,6 @@ func (app *application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 		Version:   1,
 	}
 
-	app.writeJSON(w, http.StatusOK, movie, nil)
+	app.writeJSON(w, http.StatusOK, envelope{"movie": movie}, nil)
 
 }
