@@ -12,6 +12,6 @@ func (app *application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 			"env":     app.config.env,
 		},
 	}
-	app.writeJSON(w, http.StatusOK, data, nil)
+	app.writeJSON(w, r, http.StatusOK, data, nil)
 
 }
