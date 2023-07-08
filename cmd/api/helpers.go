@@ -55,7 +55,6 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dest an
 	dec.DisallowUnknownFields()
 
 	err := dec.Decode(dest)
-	fmt.Printf("HERE IS THE ERROR %+v", err)
 	if err != nil {
 		var syntaxError *json.SyntaxError
 		var unmarshalTypeError *json.UnmarshalTypeError
