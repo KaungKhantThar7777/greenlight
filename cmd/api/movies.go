@@ -6,9 +6,11 @@ import (
 	"time"
 
 	"greenlight.kkt.net/internal/data"
+	"greenlight.kkt.net/internal/validator"
 )
 
 func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Request) {
+
 	var input struct {
 		Title   string       `json:"title"`
 		Year    int32        `json:"year"`
@@ -23,6 +25,26 @@ func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	movie := &data.Movie{
+		Title:   input.Title,
+		Year:    input.Year,
+		Runtime: input.Runtime,
+		Genres:  input.Genres,
+	}
+
+	v := validator.New()
+
+	if data.ValidateMovie(v, movie); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
+	}
+
+	fmt.Fprintf(w, "%+v\n", input)
+
+	if !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
+	}
 	fmt.Fprintf(w, "%+v\n", input)
 
 }
